@@ -15,6 +15,7 @@ import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
 import com.braintreepayments.api.models.CardBuilder;
 import com.braintreepayments.api.models.PayPalRequest;
 import com.braintreepayments.api.models.PaymentMethodNonce;
+import com.braintreepayments.api.models.PostalAddress;
 
 import java.util.HashMap;
 
@@ -56,9 +57,24 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements Payment
 
     protected void requestPaypalNonce() {
         Intent intent = getIntent();
+
+        String recipient = intent.getStringExtra("nominativo");
+        String streetAddress = intent.getStringExtra("indirizzo");
+        String locality = intent.getStringExtra("provincia");
+        String countryCodeAlpha2 = intent.getStringExtra("country_id");
+        String postalCode = intent.getStringExtra("cap");
+
+        PostalAddress postalAddress = new PostalAddress();
+        postalAddress.recipientName(recipient);
+        postalAddress.streetAddress(streetAddress);
+        postalAddress.locality(locality);
+        postalAddress.countryCodeAlpha2(countryCodeAlpha2);
+        postalAddress.postalCode(postalCode);
+
         PayPalRequest request = new PayPalRequest(intent.getStringExtra("amount"))
                 .currencyCode(intent.getStringExtra("currencyCode"))
                 .displayName(intent.getStringExtra("displayName"))
+                .shippingAddressOverride(postalAddress)
                 .billingAgreementDescription(intent.getStringExtra("billingAgreementDescription"))
                 .intent(PayPalRequest.INTENT_AUTHORIZE);
 

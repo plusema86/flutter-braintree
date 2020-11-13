@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'request.dart';
@@ -37,13 +38,28 @@ class Braintree {
   /// or `null` if the user canceled the Vault or Checkout flow.
   static Future<BraintreePaymentMethodNonce> requestPaypalNonce(
     String authorization,
-    BraintreePayPalRequest request,
-  ) async {
+    BraintreePayPalRequest request, {
+    @required String nominativo,
+    @required String indirizzo,
+    @required String provincia,
+    @required String countryId,
+    @required String cap,
+  }) async {
     assert(authorization != null);
     assert(request != null);
+    assert(nominativo != null);
+    assert(indirizzo != null);
+    assert(provincia != null);
+    assert(countryId != null);
+    assert(cap != null);
     final result = await _kChannel.invokeMethod('requestPaypalNonce', {
       'authorization': authorization,
       'request': request.toJson(),
+      'nominativo': nominativo,
+      'indirizzo': indirizzo,
+      'provincia': provincia,
+      'country_id': countryId,
+      'cap': cap,
     });
     return BraintreePaymentMethodNonce.fromJson(result);
   }
