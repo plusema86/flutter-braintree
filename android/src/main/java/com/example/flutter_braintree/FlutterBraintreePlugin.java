@@ -110,11 +110,11 @@ public class FlutterBraintreePlugin implements FlutterPlugin, ActivityAware, Met
             intent.putExtra("displayName", (String) request.get("displayName"));
             intent.putExtra("billingAgreementDescription", (String) request.get("billingAgreementDescription"));
 
-            intent.putExtra("nominativo", (String) request.get("nominativo"));
-            intent.putExtra("indirizzo", (String) request.get("indirizzo"));
-            intent.putExtra("provincia", (String) request.get("provincia"));
-            intent.putExtra("country_id", (String) request.get("country_id"));
-            intent.putExtra("cap", (String) request.get("cap"));
+            intent.putExtra("nominativo", (String) call.argument("nominativo"));
+            intent.putExtra("indirizzo", (String) call.argument("indirizzo"));
+            intent.putExtra("provincia", (String) call.argument("provincia"));
+            intent.putExtra("country_id", (String) call.argument("country_id"));
+            intent.putExtra("cap", (String) call.argument("cap"));
 
             activity.startActivityForResult(intent, CUSTOM_ACTIVITY_REQUEST_CODE);
         } else {

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.braintreepayments.api.BraintreeFragment;
 import com.braintreepayments.api.Card;
@@ -75,8 +76,17 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements Payment
                 .currencyCode(intent.getStringExtra("currencyCode"))
                 .displayName(intent.getStringExtra("displayName"))
                 .shippingAddressOverride(postalAddress)
+                .shippingAddressEditable(true)
+                .shippingAddressRequired(true)
                 .billingAgreementDescription(intent.getStringExtra("billingAgreementDescription"))
                 .intent(PayPalRequest.INTENT_AUTHORIZE);
+
+        Log.v("shippingAddressOverride",recipient);
+        Log.v("shippingAddressOverride",streetAddress);
+        Log.v("shippingAddressOverride",locality);
+        Log.v("shippingAddressOverride",countryCodeAlpha2);
+        Log.v("shippingAddressOverride",postalCode);
+        Log.v("shippingAddressOverride",postalAddress.toString());
 
         if (intent.getStringExtra("amount") == null) {
             // Vault flow
@@ -86,6 +96,8 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements Payment
             PayPal.requestOneTimePayment(braintreeFragment, request);
         }
     }
+
+
 
     @Override
     public void onPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce) {
